@@ -1,0 +1,94 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  "model": "local/qwen2.5-coder:7b",
+
+  "agent": {
+    "build": {
+      "model": "local/qwen2.5-coder:7b",
+      "temperature": 0.35,
+      "steps": 20,
+      "permission": {
+        "skill": {
+          "*": "allow"
+        }
+      }
+    },
+    "plan": {
+      "model": "local/qwen2.5-coder:7b",
+      "temperature": 0.1,
+      "steps": 5,
+      "permission": {
+        "skill": {
+          "*": "allow"
+        }
+      }
+    },
+    "web-planner": {
+      "description": "Plans web app structure from a prompt. Produces a JSON build plan covering pages, features, files needed, and whether a backend is required.",
+      "mode": "subagent",
+      "model": "local/qwen2.5-coder:7b",
+      "temperature": 0.1,
+      "steps": 4,
+      "permission": {
+        "skill": {
+          "web-planner": "allow"
+        },
+        "bash": "allow",
+        "write": "deny",
+        "edit": "deny"
+      }
+    },
+    "web-app-builder": {
+      "description": "Generates complete HTML, CSS, and JavaScript for a web app. Takes a build plan and writes all frontend files.",
+      "mode": "subagent",
+      "model": "local/qwen2.5-coder:7b",
+      "temperature": 0.35,
+      "steps": 12,
+      "permission": {
+        "skill": {
+          "web-app-builder": "allow"
+        },
+        "bash": "allow",
+        "write": "allow",
+        "edit": "allow"
+      }
+    },
+    "web-reviewer": {
+      "description": "Reviews a generated web app against its build plan. Reports issues, missing features, and whether the app is approved for delivery.",
+      "mode": "subagent",
+      "model": "local/nemotron-mini:4b",
+      "temperature": 0.1,
+      "steps": 4,
+      "permission": {
+        "skill": {
+          "web-reviewer": "allow"
+        },
+        "bash": "allow",
+        "write": "deny",
+        "edit": "deny"
+      }
+    },
+    "web-writer": {
+      "description": "Writes the final README.md for a completed web app. Takes the app name, features, and file list.",
+      "mode": "subagent",
+      "model": "local/qwen2.5-coder:7b",
+      "temperature": 0.2,
+      "steps": 3,
+      "permission": {
+        "skill": {
+          "web-writer": "allow"
+        },
+        "write": "allow",
+        "edit": "allow"
+      }
+    }
+  },
+
+  "permission": {
+    "skill": {
+      "*": "allow"
+    },
+    "bash": "allow"
+  }
+}

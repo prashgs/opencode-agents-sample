@@ -1,0 +1,12 @@
+# WebGen Agent Configuration
+# OpenCode handles all model routing — models are configured in opencode.json
+
+# OpenCode headless server settings
+opencode_server_port: 4096
+opencode_server_host: "127.0.0.1"
+
+# How many generate→review cycles before accepting best result
+max_loop_iterations: 4
+
+# Where generated apps land (relative to project root)
+output_dir: "./output"
